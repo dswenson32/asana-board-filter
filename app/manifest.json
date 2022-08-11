@@ -1,12 +1,8 @@
 {
   "name": "Asana Board Filter",
   "description": "Add ability to filter Asana board cards by text",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 3,
-  "default_icons": {
-    "16": "",
-    "128": ""
-  },
   "background": {
     "service_worker": "background.js"
   },
