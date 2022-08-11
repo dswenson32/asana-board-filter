@@ -48,7 +48,7 @@ function getElementUntilRendered(parent, query, wait) {
     })
 }
 
-getElementUntilRendered(document, '.CustomizeMenuButton-notificationIndicatorButtonContainer', 100).then((elm) => {
+const createFilterTool = function(){
     console.log('Inserting filter tool');
     // Add filter to right toolbard
     document.getElementsByClassName('PageToolbarStructure-rightChildren')[0].insertAdjacentHTML('afterbegin', filterToolElement);
@@ -87,4 +87,13 @@ getElementUntilRendered(document, '.CustomizeMenuButton-notificationIndicatorBut
     }
 
     document.getElementById("textFilterInput").addEventListener('input', debounce(() => performFilter()));
-});
+}
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.message === 'TabUpdated') {
+      console.log("Thanks for the update chief: " + document.location.href);
+      if(document.location.href.includes("board") && !document.getElementById("filterCardsTool")){
+        getElementUntilRendered(document, '.CustomizeMenuButton-notificationIndicatorButtonContainer', 100).then(createFilterTool);    
+      }
+    }
+  })
