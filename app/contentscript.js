@@ -27,7 +27,7 @@ const filterInputStyle = {
 }
 
 const filterToolElement = "<div id=\"filterCardsTool\" role=\"button\" aria-expanded=\"false\" tabindex=\"0\">" +
-                            "<input id=\"textFilterInput\"> Filter Cards </div>";
+                            "<input id=\"textFilterInput\" type=\"search\"> Filter Cards </div>";
 
 
 // Wait until element is rendered, checking on an interval                            
@@ -92,7 +92,10 @@ const createFilterTool = function(){
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message === 'TabUpdated') {
       console.log("Thanks for the update chief: " + document.location.href);
-      if(document.location.href.includes("board") && !document.getElementById("filterCardsTool")){
+      if(document.location.href.includes("board")){
+          if(document.getElementById("filterCardsTool")){
+            document.getElementById("filterCardsTool").remove()
+          }
         getElementUntilRendered(document, '.CustomizeMenuButton-notificationIndicatorButtonContainer', 100).then(createFilterTool);    
       }
     }
